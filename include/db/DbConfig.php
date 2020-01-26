@@ -2,9 +2,9 @@
 /**
  * Database Constants
  */
-define('DB_NAME', 'elearning');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_NAME', 'u952999257_elearning');
+define('DB_USERNAME', 'u952999257_elearning');
+define('DB_PASSWORD', 'T0CTNziX');
 define('DB_HOST', 'localhost');
 
 /**

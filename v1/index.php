@@ -1,6 +1,9 @@
 <?php
 
 require '../libs/vendor/autoload.php';
+require '../include/util/Helper.php';
+require '../include/db/DbOperations.php';
+require '../include/controller/UserController.php';
 
 $app = new Slim\App();
 
@@ -22,24 +25,11 @@ $app->post('/conncheck', function($request, $response, $args) {
     }
 });
 
-$app->post('/helper', function($request, $response, $args) {
-    require_once '../include/util/Helper.php';
+/* ---------------------------------------------- USERS API ---------------------------------------------- */
 
-    if (!Helper::hasRequiredParams(array('email'), $response)) {
-        return;
-    }
+$app->post('/register', \UserController::class . ':register');
 
-    $data = $request->getParams();
-    $email = $data['email'];
-
-    if (!Helper::isValidEmail($email, $response)) {
-        return;
-    }
-
-    $message[Helper::ERROR] = false;
-    $message[Helper::MESSAGE] = "Email: " . $email;
-    return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
-});
+/* ---------------------------------------------- USERS API ---------------------------------------------- */
 
 $app->run();
 

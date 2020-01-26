@@ -29,6 +29,8 @@ $app->post('/conncheck', function($request, $response, $args) {
 
 $app->post('/register', \UserController::class . ':register');
 
+$app->post('/login', \UserController::class . ':login');
+
 /* ---------------------------------------------- USERS API ---------------------------------------------- */
 
 $app->run();

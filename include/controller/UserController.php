@@ -46,6 +46,38 @@ class UserController {
         }
     }
 
+    function login($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::EMAIL, self::PASSWORD), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $email = $request_data[self::EMAIL];
+        $password = $request_data[self::PASSWORD];
+
+        if (!Helper::isValidEmail($email, $response)) {
+            return;
+        }
+
+        $db = new DbOperations();
+        $result = $db->loginUser($email, $password);
+
+        if ($result == USER_AUTHENTICATED) {
+            $user = $db->getUserByEmail($email);
+            $message[Helper::ERROR] = false;
+            $message[self::USER] = $this->extractUserDetails($user);
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else if ($result == USER_AUTHENTICATION_FAILURE) {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to login user due to invalid credentials. Please try again later";
+            return Helper::buildResponse(Helper::STATUS_UNAUTHORIZED, $message, $response);
+        } else { // user not found
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "User not found. Please try again";
+            return Helper::buildResponse(Helper::STATUS_NOT_FOUND, $message, $response);
+        }
+    }
+
     private function extractUserDetails($user) {
         $user_details = array();
         $user_details[self::ID] = $user[self::ID];

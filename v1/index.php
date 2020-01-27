@@ -34,6 +34,8 @@ $app->post('/register', \UserController::class . ':register');
 
 $app->post('/login', \UserController::class . ':login');
 
+$app->put('/users', \UserController::class . ':update')->add(\AuthController::class);
+
 /* ---------------------------------------------- USERS API ---------------------------------------------- */
 
 $app->run();

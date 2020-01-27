@@ -48,6 +48,16 @@ class DbOperations {
         }
     }
 
+    function updateUser($id, $name, $password) {
+        $password_hash = $this->getEncryptedPassword($password);
+        $stmt = $this->conn->prepare("UPDATE `users` SET `name` = ?, `password_hash` = ? WHERE `id` = ?");
+        $stmt->bind_param("ssi", $name, $password_hash, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     function getUserByEmail($email) {
         $stmt = $this->conn->prepare("SELECT * FROM `users` WHERE `email` = ?");
         $stmt->bind_param("s", $email);

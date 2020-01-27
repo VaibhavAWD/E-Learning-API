@@ -78,6 +78,30 @@ class UserController {
         }
     }
 
+    function update($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::NAME, self::PASSWORD), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $name = $request_data[self::NAME];
+        $password = $request_data[self::PASSWORD];
+        global $user_id;
+
+        $db = new DbOperations();
+        $updated = $db->updateUser($user_id, $name, $password);
+
+        if ($updated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "User updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update user. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractUserDetails($user) {
         $user_details = array();
         $user_details[self::ID] = $user[self::ID];

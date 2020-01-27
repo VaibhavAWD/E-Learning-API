@@ -102,6 +102,23 @@ class UserController {
         }
     }
 
+    function deactivate($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $deactivated = $db->deactivateUser($user_id);
+
+        if ($deactivated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "User account deactivated";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to deactivate user account. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractUserDetails($user) {
         $user_details = array();
         $user_details[self::ID] = $user[self::ID];

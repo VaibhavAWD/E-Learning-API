@@ -58,6 +58,26 @@ class DbOperations {
         }
     }
 
+    function getUserId($api_key) {
+        $stmt = $this->conn->prepare("SELECT `id` FROM `users` WHERE `api_key` = ?");
+        $stmt->bind_param("s", $api_key);
+        if ($stmt->execute()) {
+            $user_id = $stmt->get_result()->fetch_assoc();
+            return $user_id;
+        } else {
+            return null;
+        }
+    }
+
+    function isValidApiKey($api_key) {
+        $stmt = $this->conn->prepare("SELECT `id` FROM `users` WHERE `api_key` = ?");
+        $stmt->bind_param("s", $api_key);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        return $num_rows > 0;
+    }
+
     private function getEncryptedPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
     }

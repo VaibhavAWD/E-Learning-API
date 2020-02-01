@@ -38,6 +38,8 @@ $app->put('/users', \UserController::class . ':update')->add(\AuthController::cl
 
 $app->put('/profilename', \UserController::class . ':updateProfileName')->add(\AuthController::class);
 
+$app->put('/password', \UserController::class . ':updatePassword')->add(\AuthController::class);
+
 $app->put('/deactivate', \UserController::class . ':deactivate')->add(\AuthController::class);
 
 /* ---------------------------------------------- USERS API ---------------------------------------------- */

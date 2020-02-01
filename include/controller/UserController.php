@@ -8,6 +8,7 @@ class UserController {
     const NAME = "name";
     const EMAIL = "email";
     const PASSWORD = "password";
+    const NEW_PASSWORD = "new_password";
     const PASSWORD_HASH = "password_hash";
     const API_KEY = "api_key";
     const CREATED_AT = "created_at";
@@ -75,6 +76,105 @@ class UserController {
             $message[Helper::ERROR] = true;
             $message[Helper::MESSAGE] = "User not found. Please try again";
             return Helper::buildResponse(Helper::STATUS_NOT_FOUND, $message, $response);
+        }
+    }
+
+    function update($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::NAME, self::PASSWORD), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $name = $request_data[self::NAME];
+        $password = $request_data[self::PASSWORD];
+        global $user_id;
+
+        $db = new DbOperations();
+        $updated = $db->updateUser($user_id, $name, $password);
+
+        if ($updated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "User updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update user. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
+    function updateProfileName($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::NAME), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $name = $request_data[self::NAME];
+        global $user_id;
+
+        $db = new DbOperations();
+        $updated = $db->updateUserName($user_id, $name);
+
+        if ($updated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Profile name updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update profile name. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
+    function updatePassword($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::PASSWORD, self::NEW_PASSWORD), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $password = $request_data[self::PASSWORD];
+        $new_password = $request_data[self::NEW_PASSWORD];
+        global $user_id;
+
+        $db = new DbOperations();
+        $result = $db->verifyPassword($user_id, $password);
+
+        if ($result == USER_AUTHENTICATED) {
+            $updated = $db->updatePassword($user_id, $new_password);
+            if ($updated) {
+                $message[Helper::ERROR] = false;
+                $message[Helper::MESSAGE] = "Password updated successfully";
+                return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+            } else {
+                $message[Helper::ERROR] = true;
+                $message[Helper::MESSAGE] = "Failed to update password. Please try again";
+                return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+            }
+        } else if ($result == USER_AUTHENTICATION_FAILURE) {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to authenticate user due to invalid password. Please try again";
+            return Helper::buildResponse(Helper::STATUS_UNAUTHORIZED, $message, $response);
+        } else { // user not found
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "User not found. Please try again";
+            return Helper::buildResponse(Helper::STATUS_NOT_FOUND, $message, $response);
+        }
+    }
+
+    function deactivate($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $deactivated = $db->deactivateUser($user_id);
+
+        if ($deactivated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "User account deactivated";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to deactivate user account. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
         }
     }
 

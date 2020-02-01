@@ -3,11 +3,14 @@
 require '../libs/vendor/autoload.php';
 require '../include/util/Helper.php';
 require '../include/db/DbOperations.php';
+require '../include/controller/AuthController.php';
 require '../include/controller/UserController.php';
 
 $app = new Slim\App();
 
 $message = array();
+
+$user_id = null;
 
 $app->post('/hello/{name}', function($request, $response, $args) {
     $name = $args['name'];
@@ -30,6 +33,14 @@ $app->post('/conncheck', function($request, $response, $args) {
 $app->post('/register', \UserController::class . ':register');
 
 $app->post('/login', \UserController::class . ':login');
+
+$app->put('/users', \UserController::class . ':update')->add(\AuthController::class);
+
+$app->put('/profilename', \UserController::class . ':updateProfileName')->add(\AuthController::class);
+
+$app->put('/password', \UserController::class . ':updatePassword')->add(\AuthController::class);
+
+$app->put('/deactivate', \UserController::class . ':deactivate')->add(\AuthController::class);
 
 /* ---------------------------------------------- USERS API ---------------------------------------------- */
 

@@ -59,6 +59,15 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function updateUserName($id, $name) {
+        $stmt = $this->conn->prepare("UPDATE `users` SET `name` = ? WHERE `id` = ?");
+        $stmt->bind_param("si", $name, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     function deactivateUser($id) {
         $stmt = $this->conn->prepare("UPDATE `users` SET `status` = 2 WHERE `id` = ?");
         $stmt->bind_param("i", $id);

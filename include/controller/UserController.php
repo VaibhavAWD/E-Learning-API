@@ -8,6 +8,7 @@ class UserController {
     const NAME = "name";
     const EMAIL = "email";
     const PASSWORD = "password";
+    const NEW_PASSWORD = "new_password";
     const PASSWORD_HASH = "password_hash";
     const API_KEY = "api_key";
     const CREATED_AT = "created_at";
@@ -98,6 +99,29 @@ class UserController {
         } else {
             $message[Helper::ERROR] = true;
             $message[Helper::MESSAGE] = "Failed to update user. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
+    function updateProfileName($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::NAME), $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $name = $request_data[self::NAME];
+        global $user_id;
+
+        $db = new DbOperations();
+        $updated = $db->updateUserName($user_id, $name);
+
+        if ($updated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Profile name updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update profile name. Please try again";
             return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
         }
     }

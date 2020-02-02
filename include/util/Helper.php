@@ -16,10 +16,14 @@ class Helper {
     const ERROR = "error";
     const MESSAGE = "message";
 
-    public static function hasRequiredParams($required_params, $response) {
+    public static function hasRequiredParams($required_params, $request, $response) {
         $error = false;
         $error_params = "";
         $request_params = $_REQUEST;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+            parse_str($request->getBody(), $request_params);
+        }
 
         foreach($required_params as $param) {
             if (!isset($request_params[$param]) || strlen(trim($request_params[$param])) <= 0) {

@@ -15,7 +15,7 @@ class UserController {
     const STATUS = "status";
 
     function register($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::NAME, self::EMAIL, self::PASSWORD), $response)) {
+        if (!Helper::hasRequiredParams(array(self::NAME, self::EMAIL, self::PASSWORD), $request, $response)) {
             return;
         }
 
@@ -48,7 +48,7 @@ class UserController {
     }
 
     function login($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::EMAIL, self::PASSWORD), $response)) {
+        if (!Helper::hasRequiredParams(array(self::EMAIL, self::PASSWORD), $request, $response)) {
             return;
         }
 
@@ -80,11 +80,11 @@ class UserController {
     }
 
     function update($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::NAME, self::PASSWORD), $response)) {
+        if (!Helper::hasRequiredParams(array(self::NAME, self::PASSWORD), $request, $response)) {
             return;
         }
 
-        $request_data = $request->getParams();
+        $request_data = $request->getParsedBody();
         $name = $request_data[self::NAME];
         $password = $request_data[self::PASSWORD];
         global $user_id;
@@ -104,11 +104,11 @@ class UserController {
     }
 
     function updateProfileName($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::NAME), $response)) {
+        if (!Helper::hasRequiredParams(array(self::NAME), $request, $response)) {
             return;
         }
 
-        $request_data = $request->getParams();
+        $request_data = $request->getParsedBody();
         $name = $request_data[self::NAME];
         global $user_id;
 
@@ -127,11 +127,11 @@ class UserController {
     }
 
     function updatePassword($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::PASSWORD, self::NEW_PASSWORD), $response)) {
+        if (!Helper::hasRequiredParams(array(self::PASSWORD, self::NEW_PASSWORD), $request, $response)) {
             return;
         }
 
-        $request_data = $request->getParams();
+        $request_data = $request->getParsedBody();
         $password = $request_data[self::PASSWORD];
         $new_password = $request_data[self::NEW_PASSWORD];
         global $user_id;

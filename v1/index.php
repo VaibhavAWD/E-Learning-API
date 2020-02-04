@@ -68,6 +68,8 @@ $app->post('/topics', \TopicController::class . ':addTopic')->add(\AuthControlle
 
 $app->get('/topics', \TopicController::class . ':getTopics');
 
+$app->get('/topics/{id}', \TopicController::class . ':getTopic')->add(\AuthController::class);
+
 /* ---------------------------------------------- TOPICS API ---------------------------------------------- */
 
 $app->run();

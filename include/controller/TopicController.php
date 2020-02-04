@@ -61,6 +61,23 @@ class TopicController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function getTopic($request, $response, $args) {
+        $topic_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $topic = $db->getTopic($topic_id);
+
+        if ($topic != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::TOPIC] = $this->extractTopicDetails($topic);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Topic not found";
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
     private function extractTopicDetails($topic) {
         $topic_details = array();
         $topic_details[self::ID] = $topic[self::ID];

@@ -72,6 +72,8 @@ $app->get('/topics/{id}', \TopicController::class . ':getTopic')->add(\AuthContr
 
 $app->put('/topics/{id}', \TopicController::class . ':updateTopic')->add(\AuthController::class);
 
+$app->delete('/topics/{id}', \TopicController::class . ':deleteTopic')->add(\AuthController::class);
+
 /* ---------------------------------------------- TOPICS API ---------------------------------------------- */
 
 $app->run();

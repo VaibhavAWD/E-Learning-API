@@ -110,6 +110,23 @@ class TopicController {
         }
     }
 
+    function deleteTopic($request, $response, $args) {
+        $topic_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $topicDeleted = $db->deleteTopic($topic_id);
+
+        if ($topicDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Topic deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete topic. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractTopicDetails($topic) {
         $topic_details = array();
         $topic_details[self::ID] = $topic[self::ID];

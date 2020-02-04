@@ -146,6 +146,21 @@ class SubtopicController {
         }
     }
 
+    function deleteAllSubtopics($request, $response) {
+        $db = new DbOperations();
+        $subtopicsDeleted = $db->deleteAllSubtopics();
+
+        if ($subtopicsDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "All subtopics were deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete all subtopics. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractSubtopicDetails($subtopic) {
         $subtopic_details = array();
         $subtopic_details[self::ID] = $subtopic[self::ID];

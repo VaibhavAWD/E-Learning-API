@@ -344,6 +344,14 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function deleteAllSubtopics() {
+        $stmt = $this->conn->prepare("DELETE FROM `subtopics`");
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 
 }

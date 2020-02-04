@@ -91,6 +91,8 @@ $app->put('/subtopics/{id}', \SubtopicController::class . ':updateSubtopic')->ad
 
 $app->delete('/subtopics/{id}', \SubtopicController::class . ':deleteSubtopic')->add(\AuthController::class);
 
+$app->delete('/subtopics', \SubtopicController::class . ':deleteAllSubtopics')->add(\AuthController::class);
+
 /* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
 
 $app->run();

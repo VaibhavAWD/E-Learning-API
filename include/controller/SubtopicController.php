@@ -108,6 +108,14 @@ class SubtopicController {
         $thumbnail = $request_data[self::THUMBNAIL];
         $time = $request_data[self::TIME];
 
+        if (!Helper::isValidUrl($url, $response)) {
+            return;
+        }
+
+        if (!Helper::isValidUrl($thumbnail, $response)) {
+            return;
+        }
+
         $db = new DbOperations();
         $isValidTopic = $db->verifyTopic($topic_id);
 

@@ -5,6 +5,7 @@ require '../include/util/Helper.php';
 require '../include/db/DbOperations.php';
 require '../include/controller/AuthController.php';
 require '../include/controller/UserController.php';
+require '../include/controller/SubjectController.php';
 
 $app = new Slim\App();
 
@@ -43,6 +44,12 @@ $app->put('/password', \UserController::class . ':updatePassword')->add(\AuthCon
 $app->put('/deactivate', \UserController::class . ':deactivate')->add(\AuthController::class);
 
 /* ---------------------------------------------- USERS API ---------------------------------------------- */
+
+/* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
+
+$app->post('/subjects', \SubjectController::class . ':addSubject')->add(\AuthController::class);
+
+/* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
 
 $app->run();
 

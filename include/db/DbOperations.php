@@ -164,6 +164,20 @@ class DbOperations {
 
     /* --------------------------------------------- USERS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
+
+    function addSubject($title, $subtitle) {
+        $stmt = $this->conn->prepare("INSERT INTO `subjects`(`title`, `subtitle`) VALUES(? , ?)");
+        $stmt->bind_param("ss", $title, $subtitle);
+        if ($stmt->execute()) {
+            return SUBJECT_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_SUBJECT;
+        }
+    }
+
+    /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
+
 }
 
 ?>

@@ -17,4 +17,11 @@ define('USER_NOT_FOUND', 104);
 define('USER_AUTHENTICATED', 105);
 define('USER_AUTHENTICATION_FAILURE', 106);
 
+/**
+ * Subjects Constants
+ */
+define('SUBJECT_CREATED_SUCCESSFULLY', 201);
+define('FAILED_TO_CREATE_SUBJECT', 202);
+define('SUBJECT_NOT_FOUND', 203);
+
 ?>

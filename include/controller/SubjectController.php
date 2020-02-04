@@ -62,6 +62,30 @@ class SubjectController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function updateSubject($request, $response, $args) {
+        if (!Helper::hasRequiredParams(array(self::TITLE, self::SUBTITLE), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParsedBody();
+        $subject_id = $args[self::ID];
+        $title = $request_data[self::TITLE];
+        $subtitle = $request_data[self::SUBTITLE];
+
+        $db = new DbOperations();
+        $subjectUpdated = $db->updateSubject($subject_id, $title, $subtitle);
+
+        if ($subjectUpdated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Subject updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update subject. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractSubjectDetails($subject) {
         $subject_details = array();
         $subject_details[self::ID] = $subject[self::ID];

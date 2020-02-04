@@ -210,6 +210,14 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function deleteAllSubjects() {
+        $stmt = $this->conn->prepare("DELETE FROM `subjects`");
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
 
 }

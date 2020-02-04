@@ -57,6 +57,8 @@ $app->put('/subjects/{id}', \SubjectController::class . ':updateSubject')->add(\
 
 $app->delete('/subjects/{id}', \SubjectController::class . ':deleteSubject')->add(\AuthController::class);
 
+$app->delete('/subjects', \SubjectController::class . ':deleteAllSubjects')->add(\AuthController::class);
+
 /* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
 
 $app->run();

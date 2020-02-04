@@ -258,6 +258,15 @@ class DbOperations {
         }
     }
 
+    function updateTopic($id, $subject_id, $title, $subtitle) {
+        $stmt = $this->conn->prepare("UPDATE `topics` SET `subject_id` = ?, `title` = ?, `subtitle` = ? WHERE `id` = ?");
+        $stmt->bind_param("issi", $subject_id, $title, $subtitle, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
 
 }

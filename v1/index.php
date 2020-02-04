@@ -49,6 +49,8 @@ $app->put('/deactivate', \UserController::class . ':deactivate')->add(\AuthContr
 
 $app->post('/subjects', \SubjectController::class . ':addSubject')->add(\AuthController::class);
 
+$app->get('/subjects', \SubjectController::class . ':getSubjects');
+
 /* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
 
 $app->run();

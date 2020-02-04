@@ -176,6 +176,12 @@ class DbOperations {
         }
     }
 
+    function getSubjects() {
+        $stmt = $this->conn->prepare("SELECT * FROM `subjects`");
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
 
 }

@@ -30,6 +30,28 @@ class SubjectController {
         }
     }
 
+    function getSubjects($request, $response) {
+        $db = new DbOperations();
+        $result = $db->getSubjects();
+
+        $message[Helper::ERROR] = false;
+        $message[self::SUBJECTS] = array();
+
+        while ($subject = $result->fetch_assoc()) {
+            array_push($message[self::SUBJECTS], $this->extractSubjectDetails($subject));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractSubjectDetails($subject) {
+        $subject_details = array();
+        $subject_details[self::ID] = $subject[self::ID];
+        $subject_details[self::TITLE] = $subject[self::TITLE];
+        $subject_details[self::SUBTITLE] = $subject[self::SUBTITLE];
+        return $subject_details;
+    }
+
 }
 
 ?>

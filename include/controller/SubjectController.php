@@ -86,6 +86,23 @@ class SubjectController {
         }
     }
 
+    function deleteSubject($request, $response, $args) {
+        $subject_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $subjectDeleted = $db->deleteSubject($subject_id);
+
+        if ($subjectDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Subject deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete subject. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractSubjectDetails($subject) {
         $subject_details = array();
         $subject_details[self::ID] = $subject[self::ID];

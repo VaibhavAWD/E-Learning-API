@@ -276,6 +276,14 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function deleteAllTopics() {
+        $stmt = $this->conn->prepare("DELETE FROM `topics`");
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
 
 }

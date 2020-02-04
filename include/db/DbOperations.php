@@ -220,6 +220,29 @@ class DbOperations {
 
     /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
+
+    function addTopic($subject_id, $title, $subtitle) {
+        $stmt = $this->conn->prepare("INSERT INTO `topics`(`subject_id`, `title`, `subtitle`) VALUES(?, ? , ?)");
+        $stmt->bind_param("iss", $subject_id, $title, $subtitle);
+        if ($stmt->execute()) {
+            return TOPIC_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_TOPIC;
+        }
+    }
+
+    function verifySubject($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `subjects` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        return $num_rows > 0;
+    }
+
+    /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
+
 }
 
 ?>

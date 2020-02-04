@@ -24,4 +24,11 @@ define('SUBJECT_CREATED_SUCCESSFULLY', 201);
 define('FAILED_TO_CREATE_SUBJECT', 202);
 define('SUBJECT_NOT_FOUND', 203);
 
+/**
+ * Topics Constants
+ */
+define('TOPIC_CREATED_SUCCESSFULLY', 301);
+define('FAILED_TO_CREATE_TOPIC', 302);
+define('TOPIC_NOT_FOUND', 303);
+
 ?>

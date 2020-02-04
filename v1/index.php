@@ -6,6 +6,7 @@ require '../include/db/DbOperations.php';
 require '../include/controller/AuthController.php';
 require '../include/controller/UserController.php';
 require '../include/controller/SubjectController.php';
+require '../include/controller/TopicController.php';
 
 $app = new Slim\App();
 
@@ -60,6 +61,12 @@ $app->delete('/subjects/{id}', \SubjectController::class . ':deleteSubject')->ad
 $app->delete('/subjects', \SubjectController::class . ':deleteAllSubjects')->add(\AuthController::class);
 
 /* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
+
+/* ---------------------------------------------- TOPICS API ---------------------------------------------- */
+
+$app->post('/topics', \TopicController::class . ':addTopic')->add(\AuthController::class);
+
+/* ---------------------------------------------- TOPICS API ---------------------------------------------- */
 
 $app->run();
 

@@ -325,6 +325,16 @@ class DbOperations {
         }
     }
 
+    function updateSubtopic($id, $topic_id, $title, $body, $url, $thumbnail, $time) {
+        $stmt = $this->conn->prepare("UPDATE `subtopics` SET `topic_id` = ?, `title` = ?, `body` = ?,
+            `url` = ?, `thumbnail` = ?, `time` = ? WHERE `id` = ?");
+        $stmt->bind_param("isssssi", $topic_id, $title, $body, $url, $thumbnail, $time, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 
 }

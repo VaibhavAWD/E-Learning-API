@@ -7,18 +7,24 @@ class SubjectController {
     const ID = "id";
     const TITLE = "title";
     const SUBTITLE = "subtitle";
+    const IMAGE = "image";
 
     function addSubject($request, $response) {
-        if (!Helper::hasRequiredParams(array(self::TITLE, self::SUBTITLE), $request, $response)) {
+        if (!Helper::hasRequiredParams(array(self::TITLE, self::SUBTITLE, self::IMAGE), $request, $response)) {
             return;
         }
 
         $request_data = $request->getParams();
         $title = $request_data[self::TITLE];
         $subtitle = $request_data[self::SUBTITLE];
+        $image = $request_data[self::IMAGE];
+
+        if (!Helper::isValidUrl($image, $response)) {
+            return;
+        }
 
         $db = new DbOperations();
-        $result = $db->addSubject($title, $subtitle);
+        $result = $db->addSubject($title, $subtitle, $image);
 
         if ($result == SUBJECT_CREATED_SUCCESSFULLY) {
             $message[Helper::ERROR] = false;
@@ -63,7 +69,7 @@ class SubjectController {
     }
 
     function updateSubject($request, $response, $args) {
-        if (!Helper::hasRequiredParams(array(self::TITLE, self::SUBTITLE), $request, $response)) {
+        if (!Helper::hasRequiredParams(array(self::TITLE, self::SUBTITLE, self::IMAGE), $request, $response)) {
             return;
         }
 
@@ -71,9 +77,14 @@ class SubjectController {
         $subject_id = $args[self::ID];
         $title = $request_data[self::TITLE];
         $subtitle = $request_data[self::SUBTITLE];
+        $image = $request_data[self::IMAGE];
+
+        if (!Helper::isValidUrl($image, $response)) {
+            return;
+        }
 
         $db = new DbOperations();
-        $subjectUpdated = $db->updateSubject($subject_id, $title, $subtitle);
+        $subjectUpdated = $db->updateSubject($subject_id, $title, $subtitle, $image);
 
         if ($subjectUpdated) {
             $message[Helper::ERROR] = false;
@@ -123,6 +134,7 @@ class SubjectController {
         $subject_details[self::ID] = $subject[self::ID];
         $subject_details[self::TITLE] = $subject[self::TITLE];
         $subject_details[self::SUBTITLE] = $subject[self::SUBTITLE];
+        $subject_details[self::IMAGE] = $subject[self::IMAGE];
         return $subject_details;
     }
 

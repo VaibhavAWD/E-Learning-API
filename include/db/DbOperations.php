@@ -166,9 +166,9 @@ class DbOperations {
 
     /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
 
-    function addSubject($title, $subtitle) {
-        $stmt = $this->conn->prepare("INSERT INTO `subjects`(`title`, `subtitle`) VALUES(? , ?)");
-        $stmt->bind_param("ss", $title, $subtitle);
+    function addSubject($title, $subtitle, $image) {
+        $stmt = $this->conn->prepare("INSERT INTO `subjects`(`title`, `subtitle`, `image`) VALUES(?, ?, ?)");
+        $stmt->bind_param("sss", $title, $subtitle, $image);
         if ($stmt->execute()) {
             return SUBJECT_CREATED_SUCCESSFULLY;
         } else {
@@ -192,9 +192,9 @@ class DbOperations {
         }
     }
 
-    function updateSubject($id, $title, $subtitle) {
-        $stmt = $this->conn->prepare("UPDATE `subjects` SET `title` = ?, `subtitle` = ? WHERE `id` = ?");
-        $stmt->bind_param("ssi", $title, $subtitle, $id);
+    function updateSubject($id, $title, $subtitle, $image) {
+        $stmt = $this->conn->prepare("UPDATE `subjects` SET `title` = ?, `subtitle` = ?, `image` = ? WHERE `id` = ?");
+        $stmt->bind_param("sssi", $title, $subtitle, $image, $id);
         $stmt->execute();
         $stmt->store_result();
         $num_affected_rows = $stmt->affected_rows;

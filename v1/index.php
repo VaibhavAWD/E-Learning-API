@@ -7,6 +7,7 @@ require '../include/controller/AuthController.php';
 require '../include/controller/UserController.php';
 require '../include/controller/SubjectController.php';
 require '../include/controller/TopicController.php';
+require '../include/controller/SubtopicController.php';
 
 $app = new Slim\App();
 
@@ -77,6 +78,12 @@ $app->delete('/topics/{id}', \TopicController::class . ':deleteTopic')->add(\Aut
 $app->delete('/topics', \TopicController::class . ':deleteAllTopics')->add(\AuthController::class);
 
 /* ---------------------------------------------- TOPICS API ---------------------------------------------- */
+
+/* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
+
+$app->post('/subtopics', \SubtopicController::class . ':addSubtopic')->add(\AuthController::class);
+
+/* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
 
 $app->run();
 

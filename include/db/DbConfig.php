@@ -31,4 +31,11 @@ define('TOPIC_CREATED_SUCCESSFULLY', 301);
 define('FAILED_TO_CREATE_TOPIC', 302);
 define('TOPIC_NOT_FOUND', 303);
 
+/**
+ * Subtopics Constants
+ */
+define('SUBTOPIC_CREATED_SUCCESSFULLY', 401);
+define('FAILED_TO_CREATE_SUBTOPIC', 402);
+define('SUBTOPIC_NOT_FOUND', 403);
+
 ?>

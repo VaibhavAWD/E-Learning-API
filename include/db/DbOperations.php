@@ -286,6 +286,30 @@ class DbOperations {
 
     /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
+
+    function addSubtopic($topic_id, $title, $body, $url, $thumbnail, $time) {
+        $stmt = $this->conn->prepare("INSERT INTO `subtopics`(`topic_id`, `title`, `body`, `url`, `thumbnail`, `time`) 
+            VALUES(?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssss", $topic_id, $title, $body, $url, $thumbnail, $time);
+        if ($stmt->execute()) {
+            return SUBTOPIC_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_SUBTOPIC;
+        }
+    }
+
+    function verifyTopic($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `topics` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        return $num_rows > 0;
+    }
+
+    /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
+
 }
 
 ?>

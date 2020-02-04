@@ -60,6 +60,17 @@ class Helper {
         }
     }
 
+    public static function isValidUrl($url, $response) {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            $message[self::ERROR] = true;
+            $message[self::MESSAGE] = "Url is invalid. Please check and try again";
+            self::buildResponse(self::STATUS_BAD_REQUEST, $message, $response);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
 
 ?>

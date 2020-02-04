@@ -314,6 +314,16 @@ class DbOperations {
         $stmt->execute();
         return $stmt->get_result();
     }
+    
+    function getSubtopic($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `subtopics` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
 
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 

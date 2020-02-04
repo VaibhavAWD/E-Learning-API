@@ -76,6 +76,23 @@ class SubtopicController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function getSubtopic($request, $response, $args) {
+        $subtopic_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $subtopic = $db->getSubtopic($subtopic_id);
+
+        if ($subtopic != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::SUBTOPIC] = $this->extractSubtopicDetails($subtopic);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Subtopic not found";
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
     private function extractSubtopicDetails($subtopic) {
         $subtopic_details = array();
         $subtopic_details[self::ID] = $subtopic[self::ID];

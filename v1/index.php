@@ -85,6 +85,8 @@ $app->post('/subtopics', \SubtopicController::class . ':addSubtopic')->add(\Auth
 
 $app->get('/subtopics', \SubtopicController::class . ':getSubtopics');
 
+$app->get('/subtopics/{id}', \SubtopicController::class . ':getSubtopic')->add(\AuthController::class);
+
 /* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
 
 $app->run();

@@ -308,6 +308,13 @@ class DbOperations {
         return $num_rows > 0;
     }
 
+    function getSubtopics($topic_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `subtopics` WHERE `topic_id` = ?");
+        $stmt->bind_param("i", $topic_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 
 }

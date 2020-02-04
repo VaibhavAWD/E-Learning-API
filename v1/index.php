@@ -83,6 +83,8 @@ $app->delete('/topics', \TopicController::class . ':deleteAllTopics')->add(\Auth
 
 $app->post('/subtopics', \SubtopicController::class . ':addSubtopic')->add(\AuthController::class);
 
+$app->get('/subtopics', \SubtopicController::class . ':getSubtopics');
+
 /* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
 
 $app->run();

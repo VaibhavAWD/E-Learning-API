@@ -55,6 +55,39 @@ class SubtopicController {
         }
     }
 
+    function getSubtopics($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::TOPIC_ID), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $topic_id = $request_data[self::TOPIC_ID];
+
+        $db = new DbOperations();
+        $result = $db->getSubtopics($topic_id);
+
+        $message[Helper::ERROR] = false;
+        $message[self::SUBTOPICS] = array();
+
+        while ($subtopic = $result->fetch_assoc()) {
+            array_push($message[self::SUBTOPICS], $this->extractSubtopicDetails($subtopic));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractSubtopicDetails($subtopic) {
+        $subtopic_details = array();
+        $subtopic_details[self::ID] = $subtopic[self::ID];
+        $subtopic_details[self::TOPIC_ID] = $subtopic[self::TOPIC_ID];
+        $subtopic_details[self::TITLE] = $subtopic[self::TITLE];
+        $subtopic_details[self::BODY] = $subtopic[self::BODY];
+        $subtopic_details[self::URL] = $subtopic[self::URL];
+        $subtopic_details[self::THUMBNAIL] = $subtopic[self::THUMBNAIL];
+        $subtopic_details[self::TIME] = $subtopic[self::TIME];
+        return $subtopic_details;
+    }
+
 }
 
 ?>

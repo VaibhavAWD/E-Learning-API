@@ -40,6 +40,36 @@ class TopicController {
         }
     }
 
+    function getTopics($request, $response) {
+        if (!Helper::hasRequiredParams(array(self::SUBJECT_ID), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParams();
+        $subject_id = $request_data[self::SUBJECT_ID];
+
+        $db = new DbOperations();
+        $result = $db->getTopics($subject_id);
+
+        $message[Helper::ERROR] = false;
+        $message[self::TOPICS] = array();
+
+        while ($topic = $result->fetch_assoc()) {
+            array_push($message[self::TOPICS], $this->extractTopicDetails($topic));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractTopicDetails($topic) {
+        $topic_details = array();
+        $topic_details[self::ID] = $topic[self::ID];
+        $topic_details[self::SUBJECT_ID] = $topic[self::SUBJECT_ID];
+        $topic_details[self::TITLE] = $topic[self::TITLE];
+        $topic_details[self::SUBTITLE] = $topic[self::SUBTITLE];
+        return $topic_details;
+    }
+
 }
 
 ?>

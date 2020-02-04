@@ -241,6 +241,13 @@ class DbOperations {
         return $num_rows > 0;
     }
 
+    function getTopics($subject_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `topics` WHERE `subject_id` = ?");
+        $stmt->bind_param("i", $subject_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- TOPICS TABLE ------------------------------------------------ */
 
 }

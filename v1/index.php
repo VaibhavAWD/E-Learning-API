@@ -66,6 +66,8 @@ $app->delete('/subjects', \SubjectController::class . ':deleteAllSubjects')->add
 
 $app->post('/topics', \TopicController::class . ':addTopic')->add(\AuthController::class);
 
+$app->get('/topics', \TopicController::class . ':getTopics');
+
 /* ---------------------------------------------- TOPICS API ---------------------------------------------- */
 
 $app->run();

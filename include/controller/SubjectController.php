@@ -3,6 +3,7 @@
 class SubjectController {
 
     const SUBJECTS = "subjects";
+    const SUBJECT = "subject";
     const ID = "id";
     const TITLE = "title";
     const SUBTITLE = "subtitle";
@@ -39,6 +40,23 @@ class SubjectController {
 
         while ($subject = $result->fetch_assoc()) {
             array_push($message[self::SUBJECTS], $this->extractSubjectDetails($subject));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    function getSubject($request, $response, $args) {
+        $subject_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $result = $db->getSubject($subject_id);
+
+        if ($result != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::SUBJECT] = $this->extractSubjectDetails($result);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Subject not found";
         }
 
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);

@@ -51,6 +51,8 @@ $app->post('/subjects', \SubjectController::class . ':addSubject')->add(\AuthCon
 
 $app->get('/subjects', \SubjectController::class . ':getSubjects');
 
+$app->get('/subjects/{id}', \SubjectController::class . ':getSubject')->add(\AuthController::class);
+
 /* ---------------------------------------------- SUBJECTS API ---------------------------------------------- */
 
 $app->run();

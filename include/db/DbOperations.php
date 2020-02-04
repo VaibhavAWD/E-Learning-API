@@ -182,6 +182,16 @@ class DbOperations {
         return $stmt->get_result();
     }
 
+    function getSubject($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `subjects` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
     /* --------------------------------------------- SUBJECTS TABLE ------------------------------------------------ */
 
 }

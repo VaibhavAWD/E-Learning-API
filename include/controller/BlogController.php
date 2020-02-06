@@ -3,6 +3,7 @@
 class BlogController {
 
     const BLOGS = "blogs";
+    const BLOG = "blog";
     const ID = "id";
     const USER_ID = "user_id";
     const TITLE = "title";
@@ -64,6 +65,23 @@ class BlogController {
 
         while ($blog = $result->fetch_assoc()) {
             array_push($message[self::BLOGS], $this->extractBlogDetails($blog));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    function getBlog($request, $response, $args) {
+        $blog_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $blog = $db->getBlog($blog_id);
+
+        if ($blog != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::BLOG] = $this->extractBlogDetails($blog);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Blog not found";
         }
 
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);

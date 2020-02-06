@@ -117,6 +117,23 @@ class BlogController {
         }
     }
 
+    function deleteBlog($request, $response, $args) {
+        $blog_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $blogDeleted = $db->deleteBlog($blog_id);
+
+        if ($blogDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Blog deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete blog. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractBlogDetails($blog) {
         $blog_details = array();
         $blog_details[self::ID] = $blog[self::ID];

@@ -87,6 +87,36 @@ class BlogController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function updateBlog($request, $response, $args) {
+        if (!Helper::hasRequiredParams(array(self::TITLE, self::BODY, self::IMAGE_URL), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParsedBody();
+        $blog_id = $args[self::ID];
+        $title = $request_data[self::TITLE];
+        $body = $request_data[self::BODY];
+        $image_url = $request_data[self::IMAGE_URL];
+        global $user_id;
+
+        if (!Helper::isValidUrl($image_url, $response)) {
+            return;
+        }
+
+        $db = new DbOperations();
+        $blogUpdated = $db->updateBlog($blog_id, $user_id, $title, $body, $image_url);
+
+        if ($blogUpdated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Blog updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update blog. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractBlogDetails($blog) {
         $blog_details = array();
         $blog_details[self::ID] = $blog[self::ID];

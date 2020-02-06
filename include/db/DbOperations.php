@@ -505,6 +505,15 @@ class DbOperations {
         }
     }
 
+    function updateBlog($id, $user_id, $title, $body, $image_url) {
+        $stmt = $this->conn->prepare("UPDATE `blogs` SET `user_id` = ?, `title` = ?, `body` = ?, `image_url` = ? WHERE `id` = ?");
+        $stmt->bind_param("isssi", $user_id, $title, $body, $image_url, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
 
 }

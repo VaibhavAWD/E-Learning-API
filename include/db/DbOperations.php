@@ -383,6 +383,15 @@ class DbOperations {
         }
     }
 
+    function updateFeedback($id, $user_id, $message) {
+        $stmt = $this->conn->prepare("UPDATE `feedbacks` SET `user_id` = ?, `message` = ? WHERE `id` = ?");
+        $stmt->bind_param("isi", $user_id, $message, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
 
 }

@@ -65,6 +65,30 @@ class FeedbackController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function updateFeedback($request, $response, $args) {
+        if (!Helper::hasRequiredParams(array(self::MESSAGE), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParsedBody();
+        $feedback_id = $args[self::ID];
+        $feedback_msg = $request_data[self::MESSAGE];
+        global $user_id;
+
+        $db = new DbOperations();
+        $feedbackUpdated = $db->updateFeedback($feedback_id, $user_id, $feedback_msg);
+
+        if ($feedbackUpdated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Feedback updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update feedback. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractFeedbackDetails($feedback) {
         $feedback_details = array();
         $feedback_details[self::ID] = $feedback[self::ID];

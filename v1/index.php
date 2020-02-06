@@ -104,6 +104,8 @@ $app->get('/feedbacks', \FeedbackController::class . ':getFeedbacks')->add(\Auth
 
 $app->get('/feedbacks/{id}', \FeedbackController::class . ':getFeedback')->add(\AuthController::class);
 
+$app->put('/feedbacks/{id}', \FeedbackController::class . ':updateFeedback')->add(\AuthController::class);
+
 /* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
 
 $app->run();

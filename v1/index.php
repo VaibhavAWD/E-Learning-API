@@ -144,6 +144,8 @@ $app->put('/blogs/{id}', \BlogController::class . ':updateBlog')->add(\AuthContr
 
 $app->delete('/blogs/{id}', \BlogController::class . ':deleteBlog')->add(\AuthController::class);
 
+$app->delete('/blogs', \BlogController::class . ':deleteAllBlogs')->add(\AuthController::class);
+
 /* ---------------------------------------------- BLOGS API ---------------------------------------------- */
 
 $app->run();

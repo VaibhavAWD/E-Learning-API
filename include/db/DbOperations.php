@@ -523,6 +523,15 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function deleteAllBlogs($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM `blogs` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
 
 }

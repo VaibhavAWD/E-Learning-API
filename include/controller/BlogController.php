@@ -134,6 +134,23 @@ class BlogController {
         }
     }
 
+    function deleteAllBlogs($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $blogsDeleted = $db->deleteAllBlogs($user_id);
+
+        if ($blogsDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "All blogs were deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete all blogs. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractBlogDetails($blog) {
         $blog_details = array();
         $blog_details[self::ID] = $blog[self::ID];

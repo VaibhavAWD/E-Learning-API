@@ -392,6 +392,15 @@ class DbOperations {
         return $num_affected_rows > 0;
     }
 
+    function deleteFeedback($id) {
+        $stmt = $this->conn->prepare("DELETE FROM `feedbacks` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
     /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
 
 }

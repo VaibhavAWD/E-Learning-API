@@ -89,6 +89,23 @@ class FeedbackController {
         }
     }
 
+    function deleteFeedback($request, $response, $args) {
+        $feedback_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $feedbackDeleted = $db->deleteFeedback($feedback_id);
+
+        if ($feedbackDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Feedback deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete feedback. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractFeedbackDetails($feedback) {
         $feedback_details = array();
         $feedback_details[self::ID] = $feedback[self::ID];

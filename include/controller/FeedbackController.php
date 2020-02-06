@@ -106,6 +106,23 @@ class FeedbackController {
         }
     }
 
+    function deleteAllFeedbacks($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $feedbacksDeleted = $db->deleteAllFeedbacks($user_id);
+
+        if ($feedbacksDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "All feedbacks were deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete all feedbacks. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractFeedbackDetails($feedback) {
         $feedback_details = array();
         $feedback_details[self::ID] = $feedback[self::ID];

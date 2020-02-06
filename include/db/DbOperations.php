@@ -470,6 +470,70 @@ class DbOperations {
 
     /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
+
+    function addBlog($user_id, $title, $body, $image_url) {
+        $stmt = $this->conn->prepare("INSERT INTO `blogs`(`user_id`, `title`, `body`, `image_url`) VALUES(?, ?, ?, ?)");
+        $stmt->bind_param("isss", $user_id, $title, $body, $image_url);
+        if ($stmt->execute()) {
+            return BLOG_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_BLOG;
+        }
+    }
+
+    function getBlogs() {
+        $stmt = $this->conn->prepare("SELECT * FROM `blogs` ORDER BY `created_at` DESC");
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function getBlogByUserId($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `blogs` WHERE `user_id` = ? ORDER BY `created_at` DESC");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function getBlog($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `blogs` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
+    function updateBlog($id, $user_id, $title, $body, $image_url) {
+        $stmt = $this->conn->prepare("UPDATE `blogs` SET `user_id` = ?, `title` = ?, `body` = ?, `image_url` = ? WHERE `id` = ?");
+        $stmt->bind_param("isssi", $user_id, $title, $body, $image_url, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteBlog($id) {
+        $stmt = $this->conn->prepare("DELETE FROM `blogs` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteAllBlogs($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM `blogs` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
+
 }
 
 ?>

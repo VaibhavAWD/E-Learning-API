@@ -52,4 +52,11 @@ define('REPORT_CREATED_SUCCESSFULLY', 601);
 define('FAILED_TO_CREATE_REPORT', 602);
 define('REPORT_NOT_FOUND', 603);
 
+/**
+ * Blogs Constants
+ */
+define('BLOG_CREATED_SUCCESSFULLY', 701);
+define('FAILED_TO_CREATE_BLOG', 702);
+define('BLOG_NOT_FOUND', 703);
+
 ?>

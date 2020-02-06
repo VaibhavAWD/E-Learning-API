@@ -48,6 +48,23 @@ class ReportController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function getReport($request, $response, $args) {
+        $report_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $report = $db->getReport($report_id);
+
+        if ($report != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::REPORT] = $this->extractReportDetails($report);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Report not found";
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
     private function extractReportDetails($report) {
         $report_details = array();
         $report_details[self::ID] = $report[self::ID];

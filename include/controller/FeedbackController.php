@@ -48,6 +48,23 @@ class FeedbackController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function getFeedback($request, $response, $args) {
+        $feedback_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $feedback = $db->getFeedback($feedback_id);
+
+        if ($feedback != null) {
+            $message[Helper::ERROR] = false;
+            $message[self::FEEDBACK] = $this->extractFeedbackDetails($feedback);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Feedback not found";
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
     private function extractFeedbackDetails($feedback) {
         $feedback_details = array();
         $feedback_details[self::ID] = $feedback[self::ID];

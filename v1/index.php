@@ -123,6 +123,8 @@ $app->get('/reports/{id}', \ReportController::class . ':getReport')->add(\AuthCo
 
 $app->put('/reports/{id}', \ReportController::class . ':updateReport')->add(\AuthController::class);
 
+$app->delete('/reports/{id}', \ReportController::class . ':deleteReport')->add(\AuthController::class);
+
 /* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();

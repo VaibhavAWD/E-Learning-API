@@ -89,6 +89,23 @@ class ReportController {
         }
     }
 
+    function deleteReport($request, $response, $args) {
+        $report_id = $args[self::ID];
+
+        $db = new DbOperations();
+        $reportDeleted = $db->deleteReport($report_id);
+
+        if ($reportDeleted) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Report deleted successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to delete report. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractReportDetails($report) {
         $report_details = array();
         $report_details[self::ID] = $report[self::ID];

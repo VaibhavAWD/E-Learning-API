@@ -488,6 +488,13 @@ class DbOperations {
         return $stmt->get_result();
     }
 
+    function getBlogByUserId($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `blogs` WHERE `user_id` = ? ORDER BY `created_at` DESC");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
 
 }

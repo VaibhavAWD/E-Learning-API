@@ -53,6 +53,22 @@ class BlogController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function getBlogsByUserId($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $result = $db->getBlogByUserId($user_id);
+
+        $message[Helper::ERROR] = false;
+        $message[self::BLOGS] = array();
+
+        while ($blog = $result->fetch_assoc()) {
+            array_push($message[self::BLOGS], $this->extractBlogDetails($blog));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
     private function extractBlogDetails($blog) {
         $blog_details = array();
         $blog_details[self::ID] = $blog[self::ID];

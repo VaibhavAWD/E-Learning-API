@@ -136,6 +136,8 @@ $app->post('/blogs', \BlogController::class . ':addBlog')->add(\AuthController::
 
 $app->get('/blogs', \BlogController::class . ':getBlogs')->add(\AuthController::class);
 
+$app->get('/myblogs', \BlogController::class . ':getBlogsByUserId')->add(\AuthController::class);
+
 /* ---------------------------------------------- BLOGS API ---------------------------------------------- */
 
 $app->run();

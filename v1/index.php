@@ -8,6 +8,7 @@ require '../include/controller/UserController.php';
 require '../include/controller/SubjectController.php';
 require '../include/controller/TopicController.php';
 require '../include/controller/SubtopicController.php';
+require '../include/controller/FeedbackController.php';
 
 $app = new Slim\App();
 
@@ -94,6 +95,12 @@ $app->delete('/subtopics/{id}', \SubtopicController::class . ':deleteSubtopic')-
 $app->delete('/subtopics', \SubtopicController::class . ':deleteAllSubtopics')->add(\AuthController::class);
 
 /* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
+
+/* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
+
+$app->post('/feedbacks', \FeedbackController::class . ':addFeedback')->add(\AuthController::class);
+
+/* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
 
 $app->run();
 

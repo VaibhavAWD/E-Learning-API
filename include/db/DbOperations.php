@@ -354,6 +354,20 @@ class DbOperations {
 
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
+
+    function addFeedback($user_id, $message) {
+        $stmt = $this->conn->prepare("INSERT INTO `feedbacks`(`user_id`, `message`) VALUES(?, ?)");
+        $stmt->bind_param("is", $user_id, $message);
+        if ($stmt->execute()) {
+            return FEEDBACK_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_FEEDBACK;
+        }
+    }
+
+    /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
+
 }
 
 ?>

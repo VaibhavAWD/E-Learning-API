@@ -65,6 +65,30 @@ class ReportController {
         return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
     }
 
+    function updateReport($request, $response, $args) {
+        if (!Helper::hasRequiredParams(array(self::MESSAGE), $request, $response)) {
+            return;
+        }
+
+        $request_data = $request->getParsedBody();
+        $report_id = $args[self::ID];
+        $report_msg = $request_data[self::MESSAGE];
+        global $user_id;
+
+        $db = new DbOperations();
+        $reportUpdated = $db->updateReport($report_id, $user_id, $report_msg);
+
+        if ($reportUpdated) {
+            $message[Helper::ERROR] = false;
+            $message[Helper::MESSAGE] = "Report updated successfully";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        } else {
+            $message[Helper::ERROR] = true;
+            $message[Helper::MESSAGE] = "Failed to update report. Please try again";
+            return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+        }
+    }
+
     private function extractReportDetails($report) {
         $report_details = array();
         $report_details[self::ID] = $report[self::ID];

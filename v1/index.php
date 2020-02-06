@@ -121,6 +121,8 @@ $app->get('/reports', \ReportController::class . ':getReports')->add(\AuthContro
 
 $app->get('/reports/{id}', \ReportController::class . ':getReport')->add(\AuthController::class);
 
+$app->put('/reports/{id}', \ReportController::class . ':updateReport')->add(\AuthController::class);
+
 /* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();

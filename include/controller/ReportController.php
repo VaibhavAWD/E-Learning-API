@@ -32,6 +32,31 @@ class ReportController {
         }
     }
 
+    function getReports($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $result = $db->getReports($user_id);
+
+        $message[Helper::ERROR] = false;
+        $message[self::REPORTS] = array();
+
+        while ($report = $result->fetch_assoc()) {
+            array_push($message[self::REPORTS], $this->extractReportDetails($report));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractReportDetails($report) {
+        $report_details = array();
+        $report_details[self::ID] = $report[self::ID];
+        $report_details[self::USER_ID] = $report[self::USER_ID];
+        $report_details[self::MESSAGE] = $report[self::MESSAGE];
+        $report_details[self::CREATED_AT] = $report[self::CREATED_AT];
+        return $report_details;
+    }
+
 }
 
 ?>

@@ -424,6 +424,13 @@ class DbOperations {
         }
     }
 
+    function getReports($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `reports` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
 
 }

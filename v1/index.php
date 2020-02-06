@@ -117,6 +117,8 @@ $app->delete('/feedbacks', \FeedbackController::class . ':deleteAllFeedbacks')->
 
 $app->post('/reports', \ReportController::class . ':addReport')->add(\AuthController::class);
 
+$app->get('/reports', \ReportController::class . ':getReports')->add(\AuthController::class);
+
 /* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();

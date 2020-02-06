@@ -354,6 +354,122 @@ class DbOperations {
 
     /* --------------------------------------------- SUBTOPICS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
+
+    function addFeedback($user_id, $message) {
+        $stmt = $this->conn->prepare("INSERT INTO `feedbacks`(`user_id`, `message`) VALUES(?, ?)");
+        $stmt->bind_param("is", $user_id, $message);
+        if ($stmt->execute()) {
+            return FEEDBACK_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_FEEDBACK;
+        }
+    }
+
+    function getFeedbacks($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `feedbacks` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function getFeedback($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `feedbacks` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
+    function updateFeedback($id, $user_id, $message) {
+        $stmt = $this->conn->prepare("UPDATE `feedbacks` SET `user_id` = ?, `message` = ? WHERE `id` = ?");
+        $stmt->bind_param("isi", $user_id, $message, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteFeedback($id) {
+        $stmt = $this->conn->prepare("DELETE FROM `feedbacks` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteAllFeedbacks($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM `feedbacks` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
+
+    /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
+
+    function addReport($user_id, $message) {
+        $stmt = $this->conn->prepare("INSERT INTO `reports`(`user_id`, `message`) VALUES(?, ?)");
+        $stmt->bind_param("is", $user_id, $message);
+        if ($stmt->execute()) {
+            return REPORT_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_REPORT;
+        }
+    }
+
+    function getReports($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `reports` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function getReport($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `reports` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
+    function updateReport($id, $user_id, $message) {
+        $stmt = $this->conn->prepare("UPDATE `reports` SET `user_id` = ?, `message` = ? WHERE `id` = ?");
+        $stmt->bind_param("isi", $user_id, $message, $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteReport($id) {
+        $stmt = $this->conn->prepare("DELETE FROM `reports` WHERE `id` = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    function deleteAllReports($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM `reports` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_affected_rows = $stmt->affected_rows;
+        return $num_affected_rows > 0;
+    }
+
+    /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
+
 }
 
 ?>

@@ -8,6 +8,8 @@ require '../include/controller/UserController.php';
 require '../include/controller/SubjectController.php';
 require '../include/controller/TopicController.php';
 require '../include/controller/SubtopicController.php';
+require '../include/controller/FeedbackController.php';
+require '../include/controller/ReportController.php';
 
 $app = new Slim\App();
 
@@ -94,6 +96,38 @@ $app->delete('/subtopics/{id}', \SubtopicController::class . ':deleteSubtopic')-
 $app->delete('/subtopics', \SubtopicController::class . ':deleteAllSubtopics')->add(\AuthController::class);
 
 /* ---------------------------------------------- SUBTOPICS API ---------------------------------------------- */
+
+/* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
+
+$app->post('/feedbacks', \FeedbackController::class . ':addFeedback')->add(\AuthController::class);
+
+$app->get('/feedbacks', \FeedbackController::class . ':getFeedbacks')->add(\AuthController::class);
+
+$app->get('/feedbacks/{id}', \FeedbackController::class . ':getFeedback')->add(\AuthController::class);
+
+$app->put('/feedbacks/{id}', \FeedbackController::class . ':updateFeedback')->add(\AuthController::class);
+
+$app->delete('/feedbacks/{id}', \FeedbackController::class . ':deleteFeedback')->add(\AuthController::class);
+
+$app->delete('/feedbacks', \FeedbackController::class . ':deleteAllFeedbacks')->add(\AuthController::class);
+
+/* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
+
+/* ---------------------------------------------- REPORTS API ---------------------------------------------- */
+
+$app->post('/reports', \ReportController::class . ':addReport')->add(\AuthController::class);
+
+$app->get('/reports', \ReportController::class . ':getReports')->add(\AuthController::class);
+
+$app->get('/reports/{id}', \ReportController::class . ':getReport')->add(\AuthController::class);
+
+$app->put('/reports/{id}', \ReportController::class . ':updateReport')->add(\AuthController::class);
+
+$app->delete('/reports/{id}', \ReportController::class . ':deleteReport')->add(\AuthController::class);
+
+$app->delete('/reports', \ReportController::class . ':deleteAllReports')->add(\AuthController::class);
+
+/* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();
 

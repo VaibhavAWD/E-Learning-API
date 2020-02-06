@@ -38,4 +38,18 @@ define('SUBTOPIC_CREATED_SUCCESSFULLY', 401);
 define('FAILED_TO_CREATE_SUBTOPIC', 402);
 define('SUBTOPIC_NOT_FOUND', 403);
 
+/**
+ * Feedbacks Constants
+ */
+define('FEEDBACK_CREATED_SUCCESSFULLY', 501);
+define('FAILED_TO_CREATE_FEEDBACK', 502);
+define('FEEDBACK_NOT_FOUND', 503);
+
+/**
+ * Reports Constants
+ */
+define('REPORT_CREATED_SUCCESSFULLY', 601);
+define('FAILED_TO_CREATE_REPORT', 602);
+define('REPORT_NOT_FOUND', 603);
+
 ?>

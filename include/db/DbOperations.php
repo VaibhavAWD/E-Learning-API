@@ -470,6 +470,20 @@ class DbOperations {
 
     /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
+
+    function addBlog($user_id, $title, $body, $image_url) {
+        $stmt = $this->conn->prepare("INSERT INTO `blogs`(`user_id`, `title`, `body`, `image_url`) VALUES(?, ?, ?, ?)");
+        $stmt->bind_param("isss", $user_id, $title, $body, $image_url);
+        if ($stmt->execute()) {
+            return BLOG_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_BLOG;
+        }
+    }
+
+    /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
+
 }
 
 ?>

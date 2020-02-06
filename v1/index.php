@@ -125,6 +125,8 @@ $app->put('/reports/{id}', \ReportController::class . ':updateReport')->add(\Aut
 
 $app->delete('/reports/{id}', \ReportController::class . ':deleteReport')->add(\AuthController::class);
 
+$app->delete('/reports', \ReportController::class . ':deleteAllReports')->add(\AuthController::class);
+
 /* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();

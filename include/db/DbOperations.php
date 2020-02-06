@@ -412,6 +412,20 @@ class DbOperations {
 
     /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
 
+    /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
+
+    function addReport($user_id, $message) {
+        $stmt = $this->conn->prepare("INSERT INTO `reports`(`user_id`, `message`) VALUES(?, ?)");
+        $stmt->bind_param("is", $user_id, $message);
+        if ($stmt->execute()) {
+            return REPORT_CREATED_SUCCESSFULLY;
+        } else {
+            return FAILED_TO_CREATE_REPORT;
+        }
+    }
+
+    /* --------------------------------------------- REPORTS TABLE ------------------------------------------------ */
+
 }
 
 ?>

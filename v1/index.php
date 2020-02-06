@@ -9,6 +9,7 @@ require '../include/controller/SubjectController.php';
 require '../include/controller/TopicController.php';
 require '../include/controller/SubtopicController.php';
 require '../include/controller/FeedbackController.php';
+require '../include/controller/ReportController.php';
 
 $app = new Slim\App();
 
@@ -111,6 +112,12 @@ $app->delete('/feedbacks/{id}', \FeedbackController::class . ':deleteFeedback')-
 $app->delete('/feedbacks', \FeedbackController::class . ':deleteAllFeedbacks')->add(\AuthController::class);
 
 /* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
+
+/* ---------------------------------------------- REPORTS API ---------------------------------------------- */
+
+$app->post('/reports', \ReportController::class . ':addReport')->add(\AuthController::class);
+
+/* ---------------------------------------------- REPORTS API ---------------------------------------------- */
 
 $app->run();
 

@@ -482,6 +482,12 @@ class DbOperations {
         }
     }
 
+    function getBlogs() {
+        $stmt = $this->conn->prepare("SELECT * FROM `blogs` ORDER BY `created_at` DESC");
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- BLOGS TABLE ------------------------------------------------ */
 
 }

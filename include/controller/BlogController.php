@@ -38,6 +38,31 @@ class BlogController {
             return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
         }
     }
+    
+    function getBlogs($request, $response) {
+        $db = new DbOperations();
+        $result = $db->getBlogs();
+
+        $message[Helper::ERROR] = false;
+        $message[self::BLOGS] = array();
+
+        while ($blog = $result->fetch_assoc()) {
+            array_push($message[self::BLOGS], $this->extractBlogDetails($blog));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractBlogDetails($blog) {
+        $blog_details = array();
+        $blog_details[self::ID] = $blog[self::ID];
+        $blog_details[self::USER_ID] = $blog[self::USER_ID];
+        $blog_details[self::TITLE] = $blog[self::TITLE];
+        $blog_details[self::BODY] = $blog[self::BODY];
+        $blog_details[self::IMAGE_URL] = $blog[self::IMAGE_URL];
+        $blog_details[self::CREATED_AT] = $blog[self::CREATED_AT];
+        return $blog_details;
+    }
 }
 
 ?>

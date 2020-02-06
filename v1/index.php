@@ -134,6 +134,8 @@ $app->delete('/reports', \ReportController::class . ':deleteAllReports')->add(\A
 
 $app->post('/blogs', \BlogController::class . ':addBlog')->add(\AuthController::class);
 
+$app->get('/blogs', \BlogController::class . ':getBlogs')->add(\AuthController::class);
+
 /* ---------------------------------------------- BLOGS API ---------------------------------------------- */
 
 $app->run();

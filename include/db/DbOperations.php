@@ -366,6 +366,13 @@ class DbOperations {
         }
     }
 
+    function getFeedbacks($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM `feedbacks` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /* --------------------------------------------- FEEDBACKS TABLE ------------------------------------------------ */
 
 }

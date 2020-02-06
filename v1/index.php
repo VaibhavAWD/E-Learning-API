@@ -100,6 +100,8 @@ $app->delete('/subtopics', \SubtopicController::class . ':deleteAllSubtopics')->
 
 $app->post('/feedbacks', \FeedbackController::class . ':addFeedback')->add(\AuthController::class);
 
+$app->get('/feedbacks', \FeedbackController::class . ':getFeedbacks')->add(\AuthController::class);
+
 /* ---------------------------------------------- FEEDBACKS API ---------------------------------------------- */
 
 $app->run();

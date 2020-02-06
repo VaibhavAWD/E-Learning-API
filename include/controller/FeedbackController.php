@@ -32,6 +32,31 @@ class FeedbackController {
         }
     }
 
+    function getFeedbacks($request, $response) {
+        global $user_id;
+
+        $db = new DbOperations();
+        $result = $db->getFeedbacks($user_id);
+
+        $message[Helper::ERROR] = false;
+        $message[self::FEEDBACKS] = array();
+
+        while ($feedback = $result->fetch_assoc()) {
+            array_push($message[self::FEEDBACKS], $this->extractFeedbackDetails($feedback));
+        }
+
+        return Helper::buildResponse(Helper::STATUS_OK, $message, $response);
+    }
+
+    private function extractFeedbackDetails($feedback) {
+        $feedback_details = array();
+        $feedback_details[self::ID] = $feedback[self::ID];
+        $feedback_details[self::USER_ID] = $feedback[self::USER_ID];
+        $feedback_details[self::MESSAGE] = $feedback[self::MESSAGE];
+        $feedback_details[self::CREATED_AT] = $feedback[self::CREATED_AT];
+        return $feedback_details;
+    }
+
 }
 
 ?>
